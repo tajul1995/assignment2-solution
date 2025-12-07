@@ -37,6 +37,3 @@ const auth=(...roles:string[])=>{
 }
 export default auth
 
-//  "email": "mamun@gmail.com",
-//   "password": "securePassword123",
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWFtdW4gbWlhIiwiZW1haWwiOiJtYW11bkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjUwNDMxMTgsImV4cCI6MTc2Njc3MTExOH0.gkwyRJpmy6JxvOQFaBM6hJFNNIWmpBepjkLtDbMfsVE

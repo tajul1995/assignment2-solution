@@ -23,7 +23,8 @@ const getUser=async()=>{
 const updateUser=async(req:Request)=>{
     const{name,password,phone,role}=req.body
     const{userId}=req.params
-    const result=await pool.query(`UPDATE users SET name=$1  , password=$2 , phone=$3 , role=$4 WHERE id=$5 RETURNING *`,[name,password,phone,role,userId])
+    const hashPassword=await bcrypt.hash(password as string,10)
+    const result=await pool.query(`UPDATE users SET name=$1  , password=$2 , phone=$3 , role=$4 WHERE id=$5 RETURNING *`,[name,hashPassword,phone,role,userId])
     return result
 }
 const deleteSingleUser=async(req:Request,res:Response)=>{
