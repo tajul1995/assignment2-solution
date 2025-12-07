@@ -10,7 +10,7 @@ const initDb=async()=>{
          customer_id SERIAL UNIQUE,
          name VARCHAR(200) NOT NULL,
          email VARCHAR(150) UNIQUE NOT NULL,
-         password TEXT NOT NULL CHECK (LENGTH(password) >= 6),
+         password TEXT CHECK (LENGTH(password) >= 6),
          phone VARCHAR(30) NOT NULL,
          role VARCHAR(20) NOT NULL DEFAULT 'customer' CHECK (role IN ('admin','customer')),
          created_at TIMESTAMP DEFAULT NOW())`);

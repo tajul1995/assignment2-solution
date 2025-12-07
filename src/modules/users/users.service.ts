@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { pool } from "../../config/db";
-import { Request } from "express";
+import { Request, Response } from "express";
 interface CreateUserInput {
     name: string;
     email: string;
@@ -26,10 +26,25 @@ const updateUser=async(req:Request)=>{
     const result=await pool.query(`UPDATE users SET name=$1  , password=$2 , phone=$3 , role=$4 WHERE id=$5 RETURNING *`,[name,password,phone,role,userId])
     return result
 }
+const deleteSingleUser=async(req:Request,res:Response)=>{
+    const {userId}=req.params
+    // const result= await pool.query(`DELETE FROM users WHERE id = $1`,[userId])
+    //         return result
 
+    const bookingStatus=  await pool.query(`SELECT  status FROM bookings WHERE id = $1`,[userId])
+        if(bookingStatus.rows[0].status!=='active' ){
+            const result= await pool.query(`DELETE FROM users WHERE id = $1`,[userId])
+            return result
+        }
+     res.status(404).json({
+        success:false,
+        message:"active booking are not allow to delete"
+     })
+}
 
 export const userService={
     creatUser,
     getUser,
-    updateUser
+    updateUser,
+    deleteSingleUser
 }

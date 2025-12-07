@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 
 import { userService } from "./users.service";
+import { pool } from "../../config/db";
 const creatUser=async(req:Request,res:Response)=>{
     
 
@@ -76,8 +77,41 @@ const updateUser=async(req:Request,res:Response)=>{
     }
 }
 
+const  deleteSingleUser=async(req:Request,res:Response)=>{
+   
+    try {
+        const result= await userService.deleteSingleUser(req,res)
+        
+            
+
+        res.status(201).json({
+        success:true,
+        message:"User deleted successfully",
+        data:result
+    
+    })}
+
+        
+        
+         
+
+     catch (error:any) {
+        res.status(404).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+    
+
+
+
+
+
+
 export  const userController={
     creatUser,
     getUsers,
     updateUser,
+    deleteSingleUser
 }

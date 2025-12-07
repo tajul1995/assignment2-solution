@@ -11,7 +11,7 @@ const creatBooking=async(req:Request,res:Response)=>{
         res.status(201).json({
             success:true,
             message:"Vehicle created successfully",
-            data:result.rows[0]
+            data:result
         })
     } catch (error:any) {
         res.status(404).json({
@@ -74,6 +74,7 @@ const updateBooking=async(req:Request,res:Response)=>{
     const{name,password,phone,role}=req.body
     const{userId}=req.params
     
+    console.log(req.user);
     
     try {
         
@@ -95,17 +96,23 @@ const updateBooking=async(req:Request,res:Response)=>{
                 "SELECT availability_status FROM vehicles WHERE id=$1",
                 [booking.vehicle_id]
             );
+            const findRole=await pool.query(
+                "SELECT role FROM users WHERE id=$1",
+                [booking.customer_id])
+
+                console.log(findRole.rows[0].role);
+                
 
             bookingsDetails.push({
                 ...booking,
                  
-                vehicle: vehicle.rows[0] 
+                vehicle:findRole.rows[0].role=="admin"? vehicle.rows[0]:null
             });
 
         }
         
         
-        return res.status(200).json({
+         res.status(200).json({
             success: true,
             message: "Booking marked as returned. Vehicle is now available",
             data:{...bookingsDetails}

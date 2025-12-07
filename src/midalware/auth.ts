@@ -7,7 +7,7 @@ const auth=(...roles:string[])=>{
         try {
             const token= req.headers.authorization
             if(!token){
-                 return res.status(401).json({
+         res.status(401).json({
           success: false,
           message: "Missing or invalid authentication token",
         })
@@ -17,7 +17,7 @@ const auth=(...roles:string[])=>{
             // console.log("decoded",decoded);
             req.user=decoded
             if(roles.length && !roles.includes(decoded.role)){
-                return res.status(500).json({
+                 res.status(500).json({
                     success:false,
                     message:"unauthorized access"
                 })
