@@ -5,9 +5,9 @@ import auth from "../../midalware/auth";
 
 const router=Router()
 router.post('/',userController.creatUser)
-router.get('/',userController.getUsers)
+router.get('/',auth("admin"),userController.getUsers)
 
 router.put('/:userId',userController.updateUser)
-router.delete('/:userId',userController.deleteSingleUser)
+router.delete('/:userId',auth("admin"),userController.deleteSingleUser)
 
 export const userRouter=router

@@ -23,7 +23,13 @@ app.use('/api/v1/auth',authRouter)
 app.get('/', (req, res) => {
   res.send('Hello masum!')
 })
-
+app.use((req,res)=>{
+  res.status(404).json({
+    success:true,
+    message:'route not found',
+    path:req.path
+  })
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
